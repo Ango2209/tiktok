@@ -1,16 +1,19 @@
-import React, { Fragment } from "react";
+import React from "react";
 import Header from "../components/Header";
 import Sidebar from "./Sidebar/Sidebar";
+import styles from "./DefaultLayout.module.scss";
+import classNames from "classnames/bind";
 
+const cx = classNames.bind(styles);
 const DefaultLayout = (props) => {
   return (
-    <Fragment>
+    <div className={cx("wrapper")}>
       <Header />
-      <div className="container">
+      <div className={cx("container")}>
         <Sidebar />
-        <div className="content">{props.children}</div>
+        <div className={cx("content")}>{props.children}</div>
       </div>
-    </Fragment>
+    </div>
   );
 };
 export default DefaultLayout;

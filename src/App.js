@@ -10,10 +10,10 @@ function App() {
         <Routes>
           {publicRoutes.map((route, index) => {
             let Layout = DefaultLayout;
-            if (route.layout) {
-              Layout = route.layout;
-            } else {
+            if (route.layout === null) {
               Layout = Fragment;
+            } else if (route.layout) {
+              Layout = route.layout;
             }
             const Page = route.component;
             return (
