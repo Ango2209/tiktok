@@ -15,6 +15,7 @@ import {
   faEllipsisVertical,
   faKeyboard,
   faMagnifyingGlass,
+  faPlus,
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
@@ -24,10 +25,11 @@ import Menu from "../../../Propper/Menu";
 
 import {
   faArrowAltCircleRight,
-  faMessage,
   faUser,
 } from "@fortawesome/free-regular-svg-icons";
 import { faBitcoin, faGoodreads } from "@fortawesome/free-brands-svg-icons";
+import { BoxIcon, MessageIcon } from "../../../Icons";
+import Image from "../../../Image";
 const cx = classNames.bind(styles);
 const MENU_ITEMS = [
   {
@@ -137,9 +139,17 @@ const Header = () => {
         <div className={cx("actions")}>
           {currentUser ? (
             <>
-              <Tippy delay={[0, 200]} content="upload video">
+              <Button outline leftIcon={<FontAwesomeIcon icon={faPlus} />}>
+                Upload
+              </Button>
+              <Tippy delay={[0, 200]} content="upload video" placement="bottom">
                 <button className={cx("action-btn")}>
-                  <FontAwesomeIcon icon={faMessage}></FontAwesomeIcon>
+                  <MessageIcon />
+                </button>
+              </Tippy>
+              <Tippy delay={[0, 200]} content="upload video" placement="bottom">
+                <button className={cx("action-btn")}>
+                  <BoxIcon />
                 </button>
               </Tippy>
             </>
@@ -156,11 +166,12 @@ const Header = () => {
             onChange={handleMenuChange}
           >
             {currentUser ? (
-              <img
-                className={cx("user-avatar")}
+              <Image
                 alt="nguyen Van A"
+                className={cx("user-avatar")}
                 src="https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/e4dcc558851166ef623ecc17db5a5766~c5_100x100.jpeg?x-expires=1656489600&x-signature=zWaGEcrn3MLTk2D1svyH2MKj%2FKU%3D"
-              ></img>
+                fallback="https://static.fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg"
+              ></Image>
             ) : (
               <button className={cx("more-btn")}>
                 <FontAwesomeIcon icon={faEllipsisVertical} />
