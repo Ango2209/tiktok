@@ -1,9 +1,12 @@
 import classNames from "classnames/bind";
 import img from "../../../../assets/img";
 import Button from "../../../Button";
-import styles from "./Header.module.scss";
-import Tippy from "@tippyjs/react/headless";
+
 import React from "react";
+import HeadlessTippy from "@tippyjs/react/headless";
+import Tippy from "@tippyjs/react";
+import "tippy.js/dist/tippy.css";
+import styles from "./Header.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleQuestion,
@@ -18,11 +21,33 @@ import { useEffect, useState } from "react";
 import { Wrapper as PropperWrapper } from "../../../Propper";
 import AccountItem from "../../../AccountItem";
 import Menu from "../../../Propper/Menu";
+
+import {
+  faArrowAltCircleRight,
+  faMessage,
+  faUser,
+} from "@fortawesome/free-regular-svg-icons";
+import { faBitcoin, faGoodreads } from "@fortawesome/free-brands-svg-icons";
 const cx = classNames.bind(styles);
 const MENU_ITEMS = [
   {
     icon: <FontAwesomeIcon icon={faEarthAsia} />,
     title: "English",
+    children: {
+      title: "Language",
+      data: [
+        {
+          type: "language",
+          code: "en",
+          title: "English",
+        },
+        {
+          type: "language",
+          code: "vi",
+          title: "Tieng viet",
+        },
+      ],
+    },
   },
   {
     icon: <FontAwesomeIcon icon={faCircleQuestion} />,
@@ -34,20 +59,55 @@ const MENU_ITEMS = [
     title: "Keyboard shortcut",
   },
 ];
+
 const Header = () => {
   const [searchResult, setSearchResult] = useState([]);
+  let currentUser = true;
   useEffect(() => {
     setTimeout(() => {
       setSearchResult([]);
     }, 0);
   });
+  //Handle Logic
+  const handleMenuChange = (menuItem) => {
+    switch (menuItem.type) {
+      case "language":
+        break;
+      default:
+    }
+  };
+  const userMenu = [
+    {
+      icon: <FontAwesomeIcon icon={faUser} />,
+      title: "View profile",
+      to: "/@hoaa",
+    },
+    {
+      icon: <FontAwesomeIcon icon={faBitcoin} />,
+      title: "Get coins",
+      to: "/feedback",
+    },
+    {
+      icon: <FontAwesomeIcon icon={faGoodreads} />,
+      title: "Setting",
+      to: "/settings",
+    },
+    ...MENU_ITEMS,
+    {
+      icon: <FontAwesomeIcon icon={faArrowAltCircleRight} />,
+      title: "Logout",
+      to: "/logout",
+      separate: true,
+    },
+  ];
+
   return (
     <header className={cx("wrapper")}>
       <div className={cx("inner")}>
         <div className={cx("logo")}>
           <img src={img.logo.default} alt="Tiktok" />
         </div>
-        <Tippy
+        <HeadlessTippy
           interactive
           visible={searchResult.length > 0}
           render={(attrs) => (
@@ -73,16 +133,39 @@ const Header = () => {
               {<FontAwesomeIcon icon={faMagnifyingGlass} />}
             </button>
           </div>
-        </Tippy>
+        </HeadlessTippy>
         <div className={cx("actions")}>
-          <Button text>Upload</Button>
+          {currentUser ? (
+            <>
+              <Tippy delay={[0, 200]} content="upload video">
+                <button className={cx("action-btn")}>
+                  <FontAwesomeIcon icon={faMessage}></FontAwesomeIcon>
+                </button>
+              </Tippy>
+            </>
+          ) : (
+            <>
+              <Button text>Upload</Button>
 
-          <Button primary>Log in</Button>
+              <Button primary>Log in</Button>
+            </>
+          )}
 
-          <Menu items={MENU_ITEMS}>
-            <button className={cx("more-btn")}>
-              <FontAwesomeIcon icon={faEllipsisVertical} />
-            </button>
+          <Menu
+            items={currentUser ? userMenu : MENU_ITEMS}
+            onChange={handleMenuChange}
+          >
+            {currentUser ? (
+              <img
+                className={cx("user-avatar")}
+                alt="nguyen Van A"
+                src="https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/e4dcc558851166ef623ecc17db5a5766~c5_100x100.jpeg?x-expires=1656489600&x-signature=zWaGEcrn3MLTk2D1svyH2MKj%2FKU%3D"
+              ></img>
+            ) : (
+              <button className={cx("more-btn")}>
+                <FontAwesomeIcon icon={faEllipsisVertical} />
+              </button>
+            )}
           </Menu>
         </div>
       </div>
