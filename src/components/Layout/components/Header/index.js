@@ -9,9 +9,11 @@ import {
   faKeyboard,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
+import routesConfig from "../../../../config/routes";
 import Menu from "../../../Propper/Menu";
 import styles from "./Header.module.scss";
 
@@ -57,7 +59,7 @@ const MENU_ITEMS = [
 ];
 
 const Header = () => {
-  let currentUser = false;
+  let currentUser = true;
 
   //Handle Logic
   const handleMenuChange = (menuItem) => {
@@ -95,9 +97,10 @@ const Header = () => {
   return (
     <header className={cx("wrapper")}>
       <div className={cx("inner")}>
-        <div className={cx("logo")}>
+        <Link to={routesConfig.home} className={cx("logo-link")}>
           <img src={img.logo.default} alt="Tiktok" />
-        </div>
+        </Link>
+
         <Search />
         <div className={cx("actions")}>
           {currentUser ? (

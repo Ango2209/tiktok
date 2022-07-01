@@ -1,13 +1,10 @@
 import classNames from "classnames/bind";
 
-import {
-  faCircleXmark,
-  faMagnifyingGlass,
-  faSpinner,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import HeadlessTippy from "@tippyjs/react/headless";
 import { useEffect, useRef, useState } from "react";
+import { SearchIcon } from "../Icons";
 import AccountItem from "./../AccountItem";
 import { Wrapper as PropperWrapper } from "./../Propper";
 import styles from "./Search.module.scss";
@@ -29,6 +26,7 @@ const Search = () => {
           searchValue
         )}&type=more`
       );
+
       const json = await data.json();
       const dataUser = json.data;
       setIsLoading(false);
@@ -53,6 +51,15 @@ const Search = () => {
   const handleHideResult = () => {
     setShowResult(false);
   };
+  const handleChange = (e) => {
+    const searchValue = e.target.value;
+    if (!searchValue.startsWith(" ")) {
+      setSearchValue(e.target.value);
+    }
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
   return (
     <HeadlessTippy
       interactive
@@ -75,9 +82,7 @@ const Search = () => {
           value={searchValue}
           placeholder="Search accounts and video"
           spellCheck={false}
-          onChange={(e) => {
-            setSearchValue(e.target.value);
-          }}
+          onChange={handleChange}
           onFocus={() => setShowResult(true)}
         />
         {!isLoading && !!searchValue && (
@@ -90,8 +95,8 @@ const Search = () => {
           <FontAwesomeIcon className={cx("loading")} icon={faSpinner} />
         )}
 
-        <button className={cx("search-btn")}>
-          {<FontAwesomeIcon icon={faMagnifyingGlass} />}
+        <button className={cx("search-btn")} onMouseDown={handleSubmit}>
+          {<SearchIcon />}
         </button>
       </div>
     </HeadlessTippy>
