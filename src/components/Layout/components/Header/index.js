@@ -2,34 +2,28 @@ import classNames from "classnames/bind";
 import img from "../../../../assets/img";
 import Button from "../../../Button";
 
-import React from "react";
-import HeadlessTippy from "@tippyjs/react/headless";
-import Tippy from "@tippyjs/react";
-import "tippy.js/dist/tippy.css";
-import styles from "./Header.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleQuestion,
-  faCircleXmark,
   faEarthAsia,
   faEllipsisVertical,
   faKeyboard,
-  faMagnifyingGlass,
   faPlus,
-  faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
-import { Wrapper as PropperWrapper } from "../../../Propper";
-import AccountItem from "../../../AccountItem";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Tippy from "@tippyjs/react";
+import "tippy.js/dist/tippy.css";
 import Menu from "../../../Propper/Menu";
+import styles from "./Header.module.scss";
 
+import { faBitcoin, faGoodreads } from "@fortawesome/free-brands-svg-icons";
 import {
   faArrowAltCircleRight,
   faUser,
 } from "@fortawesome/free-regular-svg-icons";
-import { faBitcoin, faGoodreads } from "@fortawesome/free-brands-svg-icons";
 import { BoxIcon, MessageIcon } from "../../../Icons";
 import Image from "../../../Image";
+import Search from "../../../Search";
+
 const cx = classNames.bind(styles);
 const MENU_ITEMS = [
   {
@@ -63,13 +57,8 @@ const MENU_ITEMS = [
 ];
 
 const Header = () => {
-  const [searchResult, setSearchResult] = useState([]);
-  let currentUser = true;
-  useEffect(() => {
-    setTimeout(() => {
-      setSearchResult([]);
-    }, 0);
-  });
+  let currentUser = false;
+
   //Handle Logic
   const handleMenuChange = (menuItem) => {
     switch (menuItem.type) {
@@ -109,47 +98,22 @@ const Header = () => {
         <div className={cx("logo")}>
           <img src={img.logo.default} alt="Tiktok" />
         </div>
-        <HeadlessTippy
-          interactive
-          visible={searchResult.length > 0}
-          render={(attrs) => (
-            <div className={cx("search-result")} tabIndex="-1" {...attrs}>
-              <PropperWrapper>
-                <h4 className={cx("search-title")}>Accounts</h4>
-                <AccountItem />
-                <AccountItem />
-                <AccountItem />
-                <AccountItem />
-              </PropperWrapper>
-            </div>
-          )}
-        >
-          <div className={cx("search")}>
-            <input placeholder="Search accounts and video" spellCheck={false} />
-            <button className={cx("clear")}>
-              {<FontAwesomeIcon icon={faCircleXmark} />}
-            </button>
-            {<FontAwesomeIcon className={cx("loading")} icon={faSpinner} />}
-
-            <button className={cx("search-btn")}>
-              {<FontAwesomeIcon icon={faMagnifyingGlass} />}
-            </button>
-          </div>
-        </HeadlessTippy>
+        <Search />
         <div className={cx("actions")}>
           {currentUser ? (
             <>
               <Button outline leftIcon={<FontAwesomeIcon icon={faPlus} />}>
                 Upload
               </Button>
-              <Tippy delay={[0, 200]} content="upload video" placement="bottom">
+              <Tippy delay={[0, 200]} content="Message" placement="bottom">
                 <button className={cx("action-btn")}>
                   <MessageIcon />
                 </button>
               </Tippy>
-              <Tippy delay={[0, 200]} content="upload video" placement="bottom">
+              <Tippy delay={[0, 200]} content="Inbox" placement="bottom">
                 <button className={cx("action-btn")}>
                   <BoxIcon />
+                  <span className={cx("badge")}>12</span>
                 </button>
               </Tippy>
             </>
