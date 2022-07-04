@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
-import config from "../../../config/routes";
+import config from "../../../config";
 import Menu from "../../../components/Propper/Menu";
 import styles from "./Header.module.scss";
 
@@ -35,12 +35,12 @@ const MENU_ITEMS = [
       title: "Language",
       data: [
         {
-          type: "language",
+          type: "Language",
           code: "en",
           title: "English",
         },
         {
-          type: "language",
+          type: "Language",
           code: "vi",
           title: "Tieng viet",
         },
