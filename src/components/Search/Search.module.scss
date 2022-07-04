@@ -18,10 +18,11 @@
         font-family: var(--font-family);
            flex: 1;
            height: 100%;
+           padding-right: 40px;
            color: var(--black);
            font-size:  1.6rem;
            caret-color: var(--primary);
-           padding:  12px 0;
+       
            background-color: transparent;
         
        }

@@ -36,6 +36,10 @@ const Menu = ({
       );
     });
   };
+  //Reset to first page
+  const hanleResetMenu = () => {
+    setHistory((prev) => prev.slice(0, prev.length - 1));
+  };
   return (
     <Tippy
       hideOnClick={hideOnClick}
@@ -47,12 +51,7 @@ const Menu = ({
         <div className={cx("menu-list")} tabIndex="-1" {...attrs}>
           <PropperWrapper className={cx("menu-popper")}>
             {history.length > 1 && (
-              <Header
-                title={current.title}
-                onBack={() => {
-                  setHistory((prev) => prev.slice(0, prev.length - 1));
-                }}
-              />
+              <Header title={current.title} onBack={hanleResetMenu} />
             )}
             <div className={cx("menu-body")}>{renderItems()}</div>
           </PropperWrapper>
@@ -68,7 +67,7 @@ const Menu = ({
 Menu.propTypes = {
   children: PropTypes.node.isRequired,
   hideOnClick: PropTypes.array,
-  items: PropTypes.bool,
+  items: PropTypes.array,
   onChange: PropTypes.func,
 };
 
